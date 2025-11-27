@@ -102,4 +102,19 @@ public class UserController {
             );
         }
     }
+
+    @GetMapping("/check-id")
+    public ResponseEntity<CommonResponse<Void>> checkIdDuplicate(@RequestParam String userId) {
+        try {
+            userService.checkUserIdDuplicate(userId);
+            return ResponseEntity.ok(
+                    CommonResponse.success("사용 가능한 아이디입니다.", HttpStatus.OK)
+            );
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(
+                    CommonResponse.error(e.getMessage(), HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
 }

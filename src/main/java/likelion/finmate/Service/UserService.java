@@ -82,6 +82,12 @@ public class UserService {
         // user.setUpdatedAt(LocalDateTime.now()); // @Entity에 @UpdateTimestamp가 있다면 자동 처리됨
         userRepository.save(user);
 
-        // 연관된 관심사 정보도 제거 (ON DELETE CASCADE 설정 시 DB에서 자동 제거됨)
+    }
+
+    @Transactional(readOnly = true)
+    public void checkUserIdDuplicate(String userId) {
+        if (userRepository.findByUserId(userId).isPresent()) {
+            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
+        }
     }
 }

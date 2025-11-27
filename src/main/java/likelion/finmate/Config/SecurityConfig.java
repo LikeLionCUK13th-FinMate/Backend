@@ -38,8 +38,7 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        // 인증 없이 접근 허용 (회원가입, 로그인)
-                        .requestMatchers("/users/register", "/users/login").permitAll()
+                        .requestMatchers("/users/register", "/users/login", "/users/check-id").permitAll()
 
                         // 나머지 모든 요청은 인증 필요 (토큰 필요)
                         .anyRequest().authenticated()
